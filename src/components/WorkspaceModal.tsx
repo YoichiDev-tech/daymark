@@ -1,0 +1,16 @@
+import { Archive, CalendarDays, CheckCircle2, ClipboardList, Plus, Settings2, Users, X } from 'lucide-react'
+import { useState } from 'react'
+import type { ModalType, Settings, Task } from '../types'
+
+type Values = { title: string; date: string; details: string; workspaceName: string; focusMinutes: string; emailUpdates: boolean }
+type Props = { modal: ModalType; editingTask?: Task; settings: Settings; close: () => void; save: (values: Values) => void }
+
+export function WorkspaceModal({ modal, editingTask, settings, close, save }: Props) {
+  const [values, setValues] = useState<Values>({ title: editingTask?.title ?? '', date: '', details: '', workspaceName: settings.workspaceName, focusMinutes: String(settings.focusMinutes), emailUpdates: settings.emailUpdates })
+  const update = (key: keyof Values, value: string | boolean) => setValues((current) => ({ ...current, [key]: value }))
+  const isSettings = modal === 'settings'
+  const title = editingTask ? 'Edit task' : modal === 'task' ? 'Add a task' : modal === 'habit' ? 'Add a daily habit' : modal === 'client' ? 'Add a client' : modal === 'shipping' ? 'Schedule shipping' : modal === 'settings' ? 'Settings' : 'Add to schedule'
+  const icon = modal === 'task' ? <ClipboardList size={16} /> : modal === 'habit' ? <CheckCircle2 size={16} /> : modal === 'client' ? <Users size={16} /> : modal === 'shipping' ? <Archive size={16} /> : modal === 'settings' ? <Settings2 size={16} /> : <CalendarDays size={16} />
+  const submit = () => { if ((isSettings || values.title.trim()) && (!isSettings || values.workspaceName.trim())) save(values) }
+  return <div className="modal-backdrop" onMouseDown={close}><div className="modal" onMouseDown={(event) => event.stopPropagation()}><button className="modal-close" onClick={close} aria-label="Close dialog"><X size={18} /></button><div className="modal-kicker">{icon}</div><h2>{title}</h2><p>{isSettings ? 'Keep your workspace preferences up to date.' : 'Keep it simple. You can fill in more detail later.'}</p>{isSettings ? <><label>Workspace name<input value={values.workspaceName} onChange={(event) => update('workspaceName', event.target.value)} /></label><label>Daily focus minutes<input type="number" min="0" value={values.focusMinutes} onChange={(event) => update('focusMinutes', event.target.value)} /></label><label className="modal-checkbox"><input type="checkbox" checked={values.emailUpdates} onChange={(event) => update('emailUpdates', event.target.checked)} /> Email updates</label></> : <><input autoFocus value={values.title} onChange={(event) => update('title', event.target.value)} onKeyDown={(event) => event.key === 'Enter' && submit()} placeholder={modal === 'client' ? 'Name or business name' : modal === 'shipping' ? 'What needs to be shipped?' : 'What do you want to capture?'} /><div className="modal-fields"><input value={values.date} onChange={(event) => update('date', event.target.value)} placeholder={modal === 'task' || modal === 'habit' ? 'Date (optional)' : 'Time (optional)'} /><input value={values.details} onChange={(event) => update('details', event.target.value)} placeholder="Details (optional)" /></div></>}<button className="primary-btn modal-submit" onClick={submit}><Plus size={17} /> {editingTask ? 'Save changes' : isSettings ? 'Save preferences' : 'Create'}</button></div></div>
+}
