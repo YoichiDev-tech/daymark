@@ -1,32 +1,68 @@
-# React + TypeScript + Vite
+# Daymark
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Daymark is a personal productivity workspace for keeping the day visible and manageable. It brings tasks, habits, schedule items, and focus planning into one calm dashboard, with a lightweight interface that stays out of the way.
 
-Currently, two official plugins are available:
+Built by **YoichiDev-tech** as a frontend product concept. The included tasks, clients, schedule entries, and habit streaks are sample data for demonstration.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## What’s inside
 
-## React Compiler
+- Daily dashboard with task and schedule views
+- Task and project organization with priority and completion states
+- Habit tracking and streak indicators
+- Workspace and focus-setting controls
+- Light/dark theme preference
+- Search and navigation UI
+- Browser-backed state for selected preferences and app data
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Stack
 
-## Expanding the Oxlint configuration
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS 4
+- Lucide React
+- Oxlint
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+## Get started
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+**Requirements:** Node.js compatible with the installed Vite version and npm.
+
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Open the local URL printed by Vite.
+
+## Scripts
+
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Start the development server |
+| `npm run build` | Type-check and build for production |
+| `npm run lint` | Run Oxlint |
+| `npm run preview` | Preview the production build |
+
+## Project structure
+
+```text
+src/
+├── components/   # Dashboard and workspace UI
+├── lib/          # Browser storage helpers
+├── types/        # Shared TypeScript models
+├── App.tsx       # App state and main application shell
+├── App.css       # Component and layout styles
+└── main.tsx      # React entry point
+```
+
+## Current scope
+
+Daymark is currently a frontend prototype. It uses example content and browser-local persistence; it is not connected to a remote account system or shared team database. Treat the sample client names and schedule entries as placeholders, not real records.
+
+## Design intent
+
+Daymark favors a clear daily overview over a crowded project-management interface. Tasks, habits, and scheduled work are grouped so it is easier to decide what deserves attention next.
+
+## License
+
+No license has been declared for this repository yet. Contact the repository owner before reusing or redistributing the code.
